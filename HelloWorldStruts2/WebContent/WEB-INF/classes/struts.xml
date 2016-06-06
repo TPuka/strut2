@@ -3,13 +3,30 @@
 "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
 "http://struts.apache.org/dtds/struts-2.0.dtd">
 <struts>
-<constant name="struts.devMode" value="true" />
-<package name="helloworld" extends="struts-default">
-<action name="hello"
-class="com.tutorialspoint.struts2.HelloWorldAction"
-method="execute">
-<result name="success">/HelloWorld.jsp</result>
-<result name="error">/error.jsp</result>
-</action>
+	<constant name="struts.devMode" value="true" />
+	<constant name="struts.multipart.maxSize" value="1000000"/>
+	<package name="helloworld" extends="struts-default">
+	
+	<interceptors>
+	
+		<interceptor name="myinterceptor"
+			class="com.tutorialspoint.struts2.MyInterceptor" />
+			
+	</interceptors>
+
+	<action name="hello" class="com.tutorialspoint.struts2.HelloWorldAction"
+		method="execute">
+		<interceptor-ref name="params" />
+		<interceptor-ref name="myinterceptor" />
+		<result name="success">/HelloWorld.jsp</result>
+		<result name="error">/error.jsp</result>
+	</action>
+	<action name="upload" class="com.tutorialspoint.struts2.uploadFile" 
+		method="execute">
+		
+	 	<result name="success">/fileUploaded.jsp</result>
+	 	<result name="error">/errorFile.jsp</result>
+	</action>
+
 </package>
 </struts>
